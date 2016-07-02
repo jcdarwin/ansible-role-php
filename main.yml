@@ -1,0 +1,10 @@
+---
+# This Playbook deploys php!
+
+- hosts: all
+  remote_user: deploy
+  become: true
+  become_user: root
+  tags: php
+  tasks:
+  - include: tasks/php_install.yml

@@ -1,0 +1,26 @@
+---
+# tasks file for ansible-role-php
+
+- include_vars: "defaults/main.yml"
+
+- name: install php 5
+  apt:
+    pkg={{ item }}
+    state=present
+  with_items: "{{ ansible_role_php.packages }}"
+  tags: install
+
+# http://ecommercowy.pl/12-porad-odnosnie-optymalizacji-php-ini-dla-prestashop/
+- name: update PHP configuration for apache (php.ini)
+  template:
+    src: php.ini.j2
+    dest: /etc/php5/apache2/php.ini
+  register: php_configuration_apache2
+  tags: install
+
+- name: update PHP configuration for cli (php.ini)
+  template:
+    src: php.ini.j2
+    dest: /etc/php5/cli/php.ini
+  register: php_configuration_cli
+  tags: install

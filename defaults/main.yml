@@ -1,0 +1,13 @@
+---
+# defaults file for ansible-role-php
+
+ansible_role_php:
+  packages:
+  - php5
+  - php5-curl
+  - php5-mcrypt
+  - php5-gd
+  - php5-mysql
+  - php5-cli
+  - php5-imagick
+
