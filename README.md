@@ -36,17 +36,7 @@ You may already have:
 Role Variables
 --------------
 
-Available variables are listed below, along with default values as found in `defaults/main.yml`:
-
-    ansible_role_php:
-      packages:
-      - php5
-      - php5-curl
-      - php5-mcrypt
-      - php5-gd
-      - php5-mysql
-      - php5-cli
-      - php5-imagick
+Available variables are listed below, along with default values as found in `defaults/main.yml`
 
 Dependencies
 ------------

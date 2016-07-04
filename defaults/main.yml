@@ -2,7 +2,9 @@
 # defaults file for ansible-role-php
 
 ansible_role_php:
-  packages:
+
+  php5_installed: false
+  php5_packages:
   - php5
   - php5-curl
   - php5-mcrypt
@@ -11,3 +13,30 @@ ansible_role_php:
   - php5-cli
   - php5-imagick
 
+  php7_installed: true
+  php7_packages:
+  - python-software-properties
+  - php7.0
+  - php7.0-common
+  - php7.0-curl
+  - php7.0-mcrypt
+  - php7.0-gd
+  - php7.0-mysql
+  - php7.0-cli
+  - php7.0-imagick
+  - php7.0-zip
+
+  # These values should be set of "Off" for production use
+  display_errors: On
+  display_startup_errors: On
+  track_errors: On
+
+  max_execution_time: 300
+  log_errors: On
+  max_input_time: 60
+  zlib_output_compression: On
+  zlib_output_compression_level: 6
+  post_max_size: 32M
+  upload_max_filesize: 32M
+  memory_limit: 512M
+  error_log: /var/log/php/php_errors.log

@@ -3,24 +3,71 @@
 
 - include_vars: "defaults/main.yml"
 
+- name: create the php log directory
+  file:
+    path=/var/log/php/
+    state=directory
+    mode=0644
+
+#######################################
+#           Install PHP 5             #
+#######################################
+
 - name: install php 5
   apt:
     pkg={{ item }}
     state=present
-  with_items: "{{ ansible_role_php.packages }}"
+  with_items: "{{ ansible_role_php.php5_packages }}"
+  when: ansible_role_php.php5_installed
   tags: install
 
 # http://ecommercowy.pl/12-porad-odnosnie-optymalizacji-php-ini-dla-prestashop/
-- name: update PHP configuration for apache (php.ini)
+- name: update PHP 5 configuration for apache (php.ini)
   template:
-    src: php.ini.j2
+    src: php5.ini.j2
     dest: /etc/php5/apache2/php.ini
   register: php_configuration_apache2
+  when: ansible_role_php.php5_installed
   tags: install
 
-- name: update PHP configuration for cli (php.ini)
-  template:
-    src: php.ini.j2
-    dest: /etc/php5/cli/php.ini
-  register: php_configuration_cli
+#- name: update PHP 5 configuration for cli (php.ini)
+#  template:
+#    src: php5.ini.j2
+#    dest: /etc/php5/cli/php.ini
+#  register: php_configuration_cli
+#  when: ansible_role_php.php5_installed
+#  tags: install
+
+#######################################
+#           Install PHP 7             #
+#######################################
+
+- name: Ensure the PHP 7 ppa is present
+  apt_repository: repo='ppa:ondrej/php'
+  when: ansible_role_php.php7_installed
+  tags: packages
+
+- name: install php 7
+  apt:
+    pkg={{ item }}
+    update_cache=true
+    state=present
+  with_items: "{{ ansible_role_php.php7_packages }}"
+  when: ansible_role_php.php7_installed
   tags: install
+
+- name: update PHP 7 configuration for apache (php.ini)
+  template:
+    src: php7.ini.j2
+    dest: /etc/php/7.0/apache2/php.ini
+  register: php_configuration_apache2
+  when: ansible_role_php.php7_installed
+  tags: install
+
+#- name: update PHP 7 configuration for cli (php.ini)
+#  template:
+#    src: php7.ini.j2
+#    dest: /etc/php/7.0/cli/php.ini
+#  register: php_configuration_cli
+#  when: ansible_role_php.php7_installed
+#  tags: install
