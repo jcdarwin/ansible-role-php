@@ -24,6 +24,7 @@ ansible_role_php:
   - php7.0-mysql
   - php7.0-cli
   - php7.0-imagick
+  - php7.0-mbstring
   - php7.0-zip
 
   # These values should be set of "Off" for production use
