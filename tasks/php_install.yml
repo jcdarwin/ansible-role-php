@@ -59,7 +59,7 @@
 - name: update PHP 7 configuration for apache (php.ini)
   template:
     src: php7.ini.j2
-    dest: /etc/php/7.0/apache2/php.ini
+    dest: /etc/php/7.4/apache2/php.ini
   register: php_configuration_apache2
   when: ansible_role_php.php7_installed
   tags: install
